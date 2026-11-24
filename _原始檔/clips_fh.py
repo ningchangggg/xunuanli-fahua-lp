@@ -1,7 +1,7 @@
-"""法華落地頁實拍動圖片段（2026-11-24）。丁丁用調色對齊麻豆版，裁 4:5，彩度 1.3、對比 1.04。"""
+"""法華落地頁實拍動圖片段（2026-11-24）。11/25 起改用原始 Log＋從丁丁法華成片反推的 LUT（dingding_fahua_edit.cube），裁 4:5，不再加彩度。"""
 import subprocess,os,shutil,sys
 from concurrent.futures import ThreadPoolExecutor
-M="/Users/ningchang/Library/Mobile Documents/com~apple~CloudDocs/○煦暖曆/01_廣告投放/日日法華曆/毛片/丁丁_新拍_1110_調色對齊麻豆/"
+M="/Users/ningchang/Library/Mobile Documents/com~apple~CloudDocs/○煦暖曆/01_廣告投放/日日法華曆/毛片/丁丁_新拍_1110/"
 FPS=15
 C={
  'f_tear': (M+'C0031.mp4', 14.0, 22.0, 1.3, 0.40),
@@ -12,7 +12,8 @@ C={
 def run(item):
     n,(src,t0,t1,sp,cy)=item
     od=os.path.dirname(os.path.abspath(__file__))+f'/clips/{n}'; shutil.rmtree(od,ignore_errors=True); os.makedirs(od)
-    vf=(f"setpts=PTS/{sp},fps={FPS},crop=iw:iw*1.25:0:(ih-iw*1.25)*{cy},scale=1080:1350:flags=lanczos,eq=saturation=1.3:contrast=1.04")
+    L=os.path.dirname(os.path.abspath(__file__))+"/dingding_fahua_edit.cube"
+    vf=(f"lut3d={L},setpts=PTS/{sp},fps={FPS},crop=iw:iw*1.25:0:(ih-iw*1.25)*{cy},scale=1080:1350:flags=lanczos")
     subprocess.run(['ffmpeg','-v','error','-ss',str(t0),'-t',str(t1-t0),'-i',src,'-vf',vf,'-q:v','2',f'{od}/%03d.jpg'],check=True,stdin=subprocess.DEVNULL)
     return n,len(os.listdir(od))
 sel=sys.argv[1:] or list(C)

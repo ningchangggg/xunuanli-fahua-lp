@@ -52,14 +52,15 @@ P = [
  dict(n='01', who='想靜下心的人', h='每天忙到停不下來，想找回片刻平靜', k1='每天', v1='一句經文', k2='用來', v2='靜心三分鐘',
       p='撕下今天這一頁，讀一句經文，<br>心就<mark>慢慢安靜下來</mark>。', img='q1'),
  dict(n='02', who='喜歡抄經的人', h='想抄經，卻不知道從哪一句開始', k1='每天', v1='一段經句', k2='用來', v2='對照抄寫',
-      p='正面經文、背面白話釋義，<br>每天<mark>抄一句</mark>剛剛好。', img='q2'),
+      p='正面經文、背面白話釋義，<br>每天<mark>抄一句</mark>剛剛好。', img='q2', tall=True),
  dict(n='03', who='交換禮物', h='禮物預算一千，送一份有意義的心意', k1='送給', v1='同事朋友', k2='附', v2='精美外盒',
       p='不俗氣、有意義，<br>水墨留白<mark>放在哪都好看</mark>。', img='q3'),
  dict(n='04', who='聖誕禮物', h='送給家裡的長輩，陪他平安一整年', k1='送給', v1='長輩家人', k2='陪他', v2='365 天',
       p='字大、留白多，<br>每天讀一句<mark>不費力</mark>。', img='q4'),
 ]
 def card(x):
-    return f'''<div class="cd"><div class="ph" style="background-image:url(img/{x["img"]}.jpg)"><div class="ov"><div class="no en">NO. {x["n"]}</div><div class="who">{x["who"]}</div><h3>{x["h"]}</h3></div></div>
+    hh = ';height:540px' if x.get('tall') else ''
+    return f'''<div class="cd"><div class="ph" style="background-image:url(img/{x["img"]}.jpg){hh}"><div class="ov"><div class="no en">NO. {x["n"]}</div><div class="who">{x["who"]}</div><h3>{x["h"]}</h3></div></div>
 <div class="tk"><div class="route"><div>{x["k1"]}<b>{x["v1"]}</b></div><div>{x["k2"]}<b>{x["v2"]}</b></div></div><div><p>{x["p"]}</p></div></div></div>'''
 
 def how(i, sid, h, lead, clip, step, en):
@@ -88,11 +89,11 @@ body = f'''
   <div class="eyebrow">誰適合日日法華曆？</div>
   <h2>聖誕禮物 x 交換禮物<br><span class="mark">送禮送到心坎裡</span></h2>
   <div class="lead">每天一句《法華經》，<br>365 天，日日安心。</div>
-  {''.join(card(x) for x in P)}
+  {''.join(card(x) for x in P[:3])}
 </section>
 <section id="s03b"><div class="xm"><div class="sh"></div>
   <i class="sp" style="left:8%;top:14%;animation-delay:0s"></i><i class="sp" style="left:88%;top:20%;animation-delay:.5s"></i><i class="sp" style="left:93%;top:72%;animation-delay:1s"></i><i class="sp" style="left:5%;top:78%;animation-delay:1.5s"></i><i class="sp" style="left:50%;top:6%;animation-delay:2s"></i>
-  <div class="en sm">CHRISTMAS DELIVERY</div><div class="big">聖誕節前到貨</div></div></section>
+  <div class="en sm">IN STOCK · SHIPS IN 3 DAYS</div><div class="big">現貨三日出貨</div></div></section>
 <section id="s04">
   <div><div class="n">365</div><div class="c">句法華經文</div></div>
   <div><div class="n">2<small>面</small></div><div class="c">經文・白話釋義</div></div>
@@ -104,10 +105,10 @@ body = f'''
   <div class="lead">水墨留白、直書大字，<br>每一頁都像一幅小小的畫。</div>
   <div class="wall">{wall}</div>
 </section>
-{how(1, 's05a', '早上撕下一頁，<br>先讀一句再出門', '撕開新的一頁，靜心讀一句經文，<br>帶著定力開始今天。', 'f_tear', '撕下今天', 'TEAR')}
+{how(1, 's05a', '早上撕下一頁，<br>先讀一句再出門', '撕開新的一頁，靜心讀一句經文，<br>帶著定力開始今天。', 'f_tear', '閱讀今日法華', 'READ')}
 <section id="s06">
   <div class="eyebrow">一頁有什麼？</div>
-  <h2>正面一句經文，<br><span class="mark">背面說給你聽</span></h2>
+  <h2>正面一句經文，<br><span class="mark">背面白話釋義、輕鬆讀懂</span></h2>
   <div class="box"><div class="cap" data-caps="f_days">{caps[0]}</div>
   <div class="pgv"><div class="pgi" data-clip="f_days" style="background-image:url(gif/clips/f_days/001.jpg)"></div><div data-caps="f_lbs">{lbs[0]}</div></div></div>
 </section>
@@ -151,7 +152,7 @@ body = f'''
 </section>
 '''
 html = f'''<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><title>日日法華曆落地頁 v6</title>
+<html lang="zh-Hant"><head><meta charset="utf-8"><title>日日法華曆落地頁 v7</title>
 <style>
 {css}
 {EXTRA}
